@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sgen.breakmedown.breakmedown.helperclass.AppUserDaoHelper;
 import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
+import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
 
 @Service
 public class AppUserService implements AppUserDaoHelper{
@@ -17,8 +18,13 @@ public class AppUserService implements AppUserDaoHelper{
 	private AppUserRepo appUserRepo;
 	
 	@Override
-	public Optional<AppUser> registerAppUser(AppUser appUser) {
-		AppUser registeredAppUser = this.appUserRepo.save(appUser);
+	public Optional<AppUser> registerAppUser(AppUserRegistrationRequest registrationRequest) {
+		AppUser appUser = new AppUser(
+				registrationRequest.getFirstName(), 
+				registrationRequest.getLastName(), 
+				registrationRequest.getUsername(), 
+				registrationRequest.getPassword());
+				AppUser registeredAppUser = this.appUserRepo.save(appUser);
 		return Optional.of(registeredAppUser);
 	}
 

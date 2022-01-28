@@ -1,42 +1,17 @@
-package com.sgen.breakmedown.breakmedown.model;
+package com.sgen.breakmedown.breakmedown.requestTemplate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity(name = "AppUsers")
-@Table(name = "AppUsers")
-public class AppUser {
+public class AppUserRegistrationRequest {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	private String firstName;
 	private String lastName;
-	@Column(unique = true, updatable = true, insertable = true, nullable = false)
 	private String username;
 	private String password;
 	
-	public AppUser() {
-		// default constructor for database mapping
-	}
-
-	public AppUser(String firstName, String lastName, String username, String password) {
+	public AppUserRegistrationRequest(String firstName, String lastName, String username, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -74,5 +49,5 @@ public class AppUser {
 	
 	
 	
-	
+
 }
