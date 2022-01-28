@@ -10,6 +10,7 @@ import com.sgen.breakmedown.breakmedown.helperclass.AppUserDaoHelper;
 import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
+import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
 
 @Service
 public class AppUserService implements AppUserDaoHelper{
@@ -52,6 +53,22 @@ public class AppUserService implements AppUserDaoHelper{
 	public List<AppUser> findAllAppUsers() {
 		// TODO Auto-generated method stub
 		return this.appUserRepo.findAll();
+	}
+
+	@Override
+	public Optional<AppUser> updateAppUser(AppUserUpdateRequest updateRequest) {
+		Optional<AppUser> appUser = this.appUserRepo.findById(updateRequest.getId());
+		if(appUser.isPresent()) {
+			AppUser userToUpdate = appUser.get();
+			userToUpdate.setFirstName(updateRequest.getFirstName());
+			userToUpdate.setLastName(updateRequest.getLastName());
+			userToUpdate.setUsername(updateRequest.getUsername());
+			userToUpdate.setPassword(updateRequest.getPassword());
+			this.appUserRepo.save(userToUpdate);
+			return Optional.of(userToUpdate);
+		}else {
+			throw new RuntimeException("The operation is not allowed!");
+		}
 	}
 
 }
