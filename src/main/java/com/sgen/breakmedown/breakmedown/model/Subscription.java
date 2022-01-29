@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.sgen.breakmedown.breakmedown.subscriptionType.SubscriptionType;
+
 @Entity(name = "subscriptions")
 @Table(name = "subscriptions")
 public class Subscription {
@@ -14,7 +16,8 @@ public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private StringBuilder details;
+	private SubscriptionType subscriptionType;
+	private String details;
 	
 	@ManyToOne
 	private AppUser appUser;
@@ -23,7 +26,8 @@ public class Subscription {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Subscription(StringBuilder details, AppUser appUser) {
+	public Subscription(SubscriptionType subscriptionType, String details, AppUser appUser) {
+		this.subscriptionType = subscriptionType;
 		this.details = details;
 		this.appUser = appUser;
 	}
@@ -36,11 +40,11 @@ public class Subscription {
 		this.id = id;
 	}
 
-	public StringBuilder getDetails() {
+	public String getDetails() {
 		return details;
 	}
 
-	public void setDetails(StringBuilder details) {
+	public void setDetails(String details) {
 		this.details = details;
 	}
 
@@ -51,9 +55,14 @@ public class Subscription {
 	public void setAppUser(AppUser appUser) {
 		this.appUser = appUser;
 	}
-	
-	
-	
+
+	public SubscriptionType getSubscriptionType() {
+		return subscriptionType;
+	}
+
+	public void setSubscriptionType(SubscriptionType subscriptionType) {
+		this.subscriptionType = subscriptionType;
+	}
 	
 	
 }
