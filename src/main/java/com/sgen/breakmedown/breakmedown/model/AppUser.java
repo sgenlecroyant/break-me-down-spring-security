@@ -5,12 +5,15 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "AppUsers")
 @Table(name = "AppUsers")
@@ -25,7 +28,8 @@ public class AppUser {
 	private String username;
 	private String password;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Subscription.class)
+	@JsonIgnore(value = true)
 	private Set<Subscription> subscriptions = new HashSet<>();
 	
 	public AppUser() {

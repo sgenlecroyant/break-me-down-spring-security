@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sgen.breakmedown.breakmedown.subscriptionType.SubscriptionType;
 
 @Entity(name = "subscriptions")
@@ -23,7 +25,8 @@ public class Subscription {
 	private SubscriptionType subscriptionType;
 	private String details;
 	
-	@ManyToMany(mappedBy = "subscriptions")
+	@ManyToMany(mappedBy = "subscriptions", fetch = FetchType.EAGER, targetEntity = AppUser.class)
+	@JsonIgnore(value = true)
 	private List<AppUser> appUsers = new ArrayList<>();
 	
 	public Subscription() {

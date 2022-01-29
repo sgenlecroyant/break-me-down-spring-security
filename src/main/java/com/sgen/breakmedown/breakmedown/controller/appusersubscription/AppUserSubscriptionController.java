@@ -18,6 +18,6 @@ public class AppUserSubscriptionController {
 	@Autowired
 	private SubscriptionService subscriptionService;
 	
-	public ResponseEntity<String> 
+//	public ResponseEntity<String> 
 
 }
