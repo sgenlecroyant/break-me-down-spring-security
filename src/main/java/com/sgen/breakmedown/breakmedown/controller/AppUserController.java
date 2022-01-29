@@ -52,11 +52,11 @@ public class AppUserController {
 	public ResponseEntity<Boolean> deleteAppUserById(@PathVariable Integer id){
 		@SuppressWarnings(value = "unused")
 		boolean wasAppUserDeleted = this.appUserService.deleteAppUserById(id);
-			return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
+			return new ResponseEntity<Boolean>(wasAppUserDeleted, HttpStatus.OK);
 	}
 	
 	@PatchMapping(value = "/appusers")
-	public ResponseEntity<AppUser> updateAppUser(AppUserUpdateRequest updateRequest){
+	public ResponseEntity<AppUser> updateAppUser(@RequestBody AppUserUpdateRequest updateRequest){
 		Optional<AppUser> updatedUser = this.appUserService.updateAppUser(updateRequest);
 		ResponseEntity.of(updatedUser);
 		return ResponseEntity.ok().build();

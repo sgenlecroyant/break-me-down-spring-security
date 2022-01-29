@@ -43,6 +43,7 @@ public class AppUserService implements AppUserDaoHelper{
 	public boolean deleteAppUserById(Integer id) {
 		Optional<AppUser> appUser = this.appUserRepo.findById(id);
 		if(appUser.isPresent()) {
+			this.appUserRepo.deleteById(id);
 			return true;
 		}else {
 			return false;

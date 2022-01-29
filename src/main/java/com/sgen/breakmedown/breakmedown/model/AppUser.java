@@ -1,10 +1,14 @@
 package com.sgen.breakmedown.breakmedown.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name = "AppUsers")
@@ -19,6 +23,9 @@ public class AppUser {
 	@Column(unique = true, updatable = true, insertable = true, nullable = false)
 	private String username;
 	private String password;
+	
+	@OneToMany(mappedBy = "appUser")
+	private Set<Subscription> subscriptions = new HashSet<>();
 	
 	public AppUser() {
 		// default constructor for database mapping
@@ -70,6 +77,15 @@ public class AppUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Set<Subscription> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(Set<Subscription> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+	
 	
 	
 	
