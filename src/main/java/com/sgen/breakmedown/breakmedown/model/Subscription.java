@@ -1,9 +1,13 @@
 package com.sgen.breakmedown.breakmedown.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,17 +23,16 @@ public class Subscription {
 	private SubscriptionType subscriptionType;
 	private String details;
 	
-	@ManyToOne
-	private AppUser appUser;
+	@ManyToMany(mappedBy = "subscriptions")
+	private List<AppUser> appUsers = new ArrayList<>();
 	
 	public Subscription() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Subscription(SubscriptionType subscriptionType, String details, AppUser appUser) {
+	public Subscription(SubscriptionType subscriptionType, String details) {
 		this.subscriptionType = subscriptionType;
 		this.details = details;
-		this.appUser = appUser;
 	}
 
 	public Integer getId() {
@@ -48,12 +51,12 @@ public class Subscription {
 		this.details = details;
 	}
 
-	public AppUser getAppUser() {
-		return appUser;
+	public List<AppUser> getAppUsers() {
+		return appUsers;
 	}
 
-	public void setAppUser(AppUser appUser) {
-		this.appUser = appUser;
+	public void setAppUsers(List<AppUser> appUsers) {
+		this.appUsers = appUsers;
 	}
 
 	public SubscriptionType getSubscriptionType() {

@@ -36,8 +36,18 @@ public class SubscriptionService {
 	}
 	
 	public Subscription updateSubscription(Subscription subscription) {
-		Subscription updatedSubscription = this.subscriptionRepo.save(subscription);
-		return updatedSubscription;
+		Optional<Subscription> subscriptionToUpdate = this.subscriptionRepo.findById(subscription.getId());
+		if(subscriptionToUpdate.isPresent()) {
+			Subscription thisSubscription = subscriptionToUpdate.get();
+			
+			thisSubscription.setAppUsers(subscription.getAppUsers());
+			thisSubscription.setDetails(subscription.getDetails());
+			thisSubscription.setSubscriptionType(subscription.getSubscriptionType());
+			Subscription updatedSubscription = this.subscriptionRepo.save(subscription);
+			return updatedSubscription;
+		}else {
+			throw new RuntimeException("Unable to update the subscription!");
+		}
 	}
 	
 	public Optional<Subscription> fetchSubcriptionById(Integer id){
