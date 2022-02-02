@@ -31,6 +31,12 @@ public class AppUserController {
 	@GetMapping(value = "/appusers")
 	public ResponseEntity<List<AppUser>> fetchAllUsers(){
 		List<AppUser> allAppUsers = this.appUserService.findAllAppUsers();
+		
+		allAppUsers.stream()
+				.forEach((appUser) -> {
+					System.out.println(appUser.getFirstName()+ " is a/an " +appUser.getRole()+
+							"with auth: " +appUser.getAuthorities());
+				});
 		return ResponseEntity.ok().body(allAppUsers);
 	}
 	

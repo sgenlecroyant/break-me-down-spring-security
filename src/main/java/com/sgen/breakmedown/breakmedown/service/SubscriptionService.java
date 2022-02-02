@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.model.Subscription;
 import com.sgen.breakmedown.breakmedown.repository.SubscriptionRepo;
 
@@ -58,4 +59,5 @@ public class SubscriptionService {
 			throw new RuntimeException("subscription not available!");
 		}
 	}
+	
 }

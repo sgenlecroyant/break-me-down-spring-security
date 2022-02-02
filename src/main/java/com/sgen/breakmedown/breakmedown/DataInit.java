@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.model.Subscription;
+import com.sgen.breakmedown.breakmedown.privilege.role.Role;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
 import com.sgen.breakmedown.breakmedown.repository.SubscriptionRepo;
 import com.sgen.breakmedown.breakmedown.subscriptionType.SubscriptionType;
@@ -54,6 +55,9 @@ public class DataInit implements CommandLineRunner{
 		this.john.getSubscriptions().add(S2G);
 		this.john.getSubscriptions().add(S3G);
 		
+		this.admin.setRole(Role.ADMIN);
+		this.james.setRole(Role.USER);
+		this.john.setRole(Role.USER);
 		
 		this.appUserRepo.saveAllAndFlush(List.of(admin, james, john));
 	}
