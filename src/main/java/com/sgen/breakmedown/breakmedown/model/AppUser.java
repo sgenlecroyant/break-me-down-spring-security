@@ -1,10 +1,13 @@
 package com.sgen.breakmedown.breakmedown.model;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sgen.breakmedown.breakmedown.privilege.permission.Permission;
+import com.sgen.breakmedown.breakmedown.privilege.role.Role;
 
 @Entity(name = "AppUsers")
 @Table(name = "AppUsers")
@@ -26,7 +31,10 @@ public class AppUser {
 	private String lastName;
 	@Column(unique = true, updatable = true, insertable = true, nullable = false)
 	private String username;
-	private String password;
+	private String password; // still using the raw passwords cuz we have not started yet anything related to security
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Subscription.class)
 	@JsonIgnore(value = true)
@@ -91,8 +99,17 @@ public class AppUser {
 		this.subscriptions = subscriptions;
 	}
 	
+	public Set<? extends Permission> getAuthorities(){
+		return this.role.getPermissions();
+	}
 	
+	public Role getRole() {
+		return this.role;
+	}
 	
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	
 	
 	
