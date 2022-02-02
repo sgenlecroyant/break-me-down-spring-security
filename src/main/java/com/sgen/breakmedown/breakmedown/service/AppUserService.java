@@ -26,6 +26,7 @@ public class AppUserService implements AppUserDaoHelper{
 				registrationRequest.getUsername(), 
 				registrationRequest.getPassword());
 				AppUser registeredAppUser = this.appUserRepo.save(appUser);
+				
 		return Optional.of(registeredAppUser);
 	}
 

@@ -43,7 +43,6 @@ public class AppUserSubscriptionController {
 			System.out.println("The AppUser " +appUser+ " is not eligible with auth: " +appUser.get().getAuthorities());
 
 		}
-		
 		return ResponseEntity.ok().body("Eligibility check is Done!");
 	}
 
