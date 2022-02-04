@@ -1,7 +1,7 @@
 package com.sgen.breakmedown.breakmedown.model;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,10 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.privilege.permission.Permission;
 import com.sgen.breakmedown.breakmedown.privilege.role.Role;
 
@@ -40,6 +41,8 @@ public class AppUser {
 	@JsonIgnore(value = true)
 	private Set<Subscription> subscriptions = new HashSet<>();
 	
+	@OneToOne
+	private Account account;
 	public AppUser() {
 		// default constructor for database mapping
 	}
@@ -110,6 +113,35 @@ public class AppUser {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	public Account getAccount() {
+		return account;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, id, lastName, password, role, subscriptions, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AppUser other = (AppUser) obj;
+		return Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
+				&& role == other.role && Objects.equals(subscriptions, other.subscriptions)
+				&& Objects.equals(username, other.username);
+	}
+	
+	
 	
 	
 	
