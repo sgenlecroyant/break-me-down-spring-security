@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.model.account.accountEnum.AccountStatus;
 
@@ -28,6 +29,7 @@ public class Account {
 	private AccountStatus accountStatus;
 	
 	@OneToOne(mappedBy = "account")
+	@JsonIgnore(value = true)
 	private AppUser appUser;
 	
 	public Account() {
