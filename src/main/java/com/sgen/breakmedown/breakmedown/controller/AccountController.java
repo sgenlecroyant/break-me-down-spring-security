@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.model.account.Account;
+import com.sgen.breakmedown.breakmedown.model.account.accountEnum.AccountStatus;
 import com.sgen.breakmedown.breakmedown.service.AccountService;
 import com.sgen.breakmedown.breakmedown.service.AppUserService;
 
@@ -46,6 +47,23 @@ public class AccountController {
 			}
 		}
 		return "Account Topped With Success";
+	}
+	
+	@PostMapping(value = "/accounts/change_accountstatus/{id}")
+	public String changeAccountStatus(@PathVariable(value = "id") Integer id) {
+		Optional<Account> account = this.accountService.fetchAccountById(id);
+		if(account.isPresent()) {
+			Account thisAccount = account.get();
+			AccountStatus newAccountStatus = thisAccount.getAccountStatus();
+			if(newAccountStatus.equals(AccountStatus.ACTIVE)) {
+				newAccountStatus = AccountStatus.LOCKED;
+			}else {
+				newAccountStatus = AccountStatus.ACTIVE;
+			}
+			thisAccount.setAccountStatus((newAccountStatus));
+			this.accountService.registerAccount(thisAccount);
+		}
+		return "Account Status Changed successfully";
 	}
 	
 
