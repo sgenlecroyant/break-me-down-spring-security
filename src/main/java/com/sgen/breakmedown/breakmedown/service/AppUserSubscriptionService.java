@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.model.Subscription;
+import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.privilege.role.Role;
 
 @Service
@@ -27,8 +28,13 @@ public class AppUserSubscriptionService {
 				String exceptionMsg = "The AppUser with Role %s is not eligible for subscription";
 				throw new RuntimeException(String.format(exceptionMsg, fetchedAppUser.getRole()));
 			}else {
-				fetchedAppUser.getSubscriptions().add(subscription.get());
-				return true;
+				Account appUserAccount = fetchedAppUser.getAccount();
+				if(appUserAccount.getBalance() > subscription.get().getFees()) {
+					fetchedAppUser.getSubscriptions().add(subscription.get());
+					return true;
+				}else {
+					throw new RuntimeException("Insufficient balance for subscription " +subscription.get().getSubscriptionType());
+				}
 			}
 		}else {
 			String exceptionMsg = "The AppUser or The Subscription type is not available";
