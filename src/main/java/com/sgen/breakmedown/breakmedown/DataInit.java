@@ -43,9 +43,9 @@ public class DataInit implements CommandLineRunner{
 		this.james = new AppUser("James", "Bond", "james@gmail.com", "password");
 		this.john = new AppUser("John", "Anelka", "john@gmail.com", "password");
 		
-		this.S2G = new Subscription(SubscriptionType.S2G, "This is the slowest internet connection that we have");
-		this.S3G = new Subscription(SubscriptionType.S3G, "This is the average internet connection that we have");
-		this.S4G = new Subscription(SubscriptionType.S4G, "This is the most powerful internet connection that we have");
+		this.S2G = new Subscription(SubscriptionType.S2G, "This is the slowest internet connection that we have", 500);
+		this.S3G = new Subscription(SubscriptionType.S3G, "This is the average internet connection that we have", 700);
+		this.S4G = new Subscription(SubscriptionType.S4G, "This is the most powerful internet connection that we have", 1300);
 		
 
 		Account account = new Account(AccountStatus.LOCKED);

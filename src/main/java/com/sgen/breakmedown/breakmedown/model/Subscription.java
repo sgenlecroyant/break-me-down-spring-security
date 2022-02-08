@@ -24,6 +24,7 @@ public class Subscription {
 	private Integer id;
 	private SubscriptionType subscriptionType;
 	private String details;
+	private float fees;
 	
 	@ManyToMany(mappedBy = "subscriptions", fetch = FetchType.EAGER, targetEntity = AppUser.class)
 	@JsonIgnore(value = true)
@@ -33,9 +34,10 @@ public class Subscription {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Subscription(SubscriptionType subscriptionType, String details) {
+	public Subscription(SubscriptionType subscriptionType, String details, float fees) {
 		this.subscriptionType = subscriptionType;
 		this.details = details;
+		this.fees = fees;
 	}
 
 	public Integer getId() {
@@ -69,6 +71,16 @@ public class Subscription {
 	public void setSubscriptionType(SubscriptionType subscriptionType) {
 		this.subscriptionType = subscriptionType;
 	}
+
+	public float getFees() {
+		return fees;
+	}
+
+	public void setFees(float fees) {
+		this.fees = fees;
+	}
+	
+	
 	
 	
 }
