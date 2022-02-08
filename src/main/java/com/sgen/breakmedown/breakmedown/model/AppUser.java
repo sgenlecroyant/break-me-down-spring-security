@@ -37,7 +37,7 @@ public class AppUser {
 	private Role role;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Subscription.class)
-	@JsonIgnore(value = true)
+	@JsonIgnore(value = false)
 	private Set<Subscription> subscriptions = new HashSet<>();
 	
 	@OneToOne

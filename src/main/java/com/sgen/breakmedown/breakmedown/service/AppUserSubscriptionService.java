@@ -2,6 +2,8 @@ package com.sgen.breakmedown.breakmedown.service;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +11,18 @@ import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.model.Subscription;
 import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.privilege.role.Role;
+import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
 
 @Service
 public class AppUserSubscriptionService {
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private AppUserService appUserService;
 	
 	@Autowired
-	private SubscriptionService subscriptionService;
+	private AppUserRepo appUserRepo;
 	
 	public boolean checkAppUserEligibility(Optional<AppUser> appUser, Optional<Subscription> subscription) {
 		
@@ -30,8 +35,18 @@ public class AppUserSubscriptionService {
 			}else {
 				Account appUserAccount = fetchedAppUser.getAccount();
 				if(appUserAccount.getBalance() > subscription.get().getFees()) {
-					fetchedAppUser.getSubscriptions().add(subscription.get());
-					return true;
+					Optional<Subscription> existingSub = fetchedAppUser.getSubscriptions().stream()
+								.filter((sub) -> sub.getSubscriptionType().equals(subscription.get().getSubscriptionType()))
+								.findFirst();
+					if(existingSub.isEmpty()) {
+						fetchedAppUser.getSubscriptions().add(subscription.get());
+						logger.info("Subscribing {} to AppUser {}", subscription.get().getSubscriptionType(), fetchedAppUser.getFirstName());
+						this.appUserRepo.save(fetchedAppUser);
+						return true;
+					}else {
+						throw new RuntimeException("The Subscription is already taken");
+					}
+					
 				}else {
 					throw new RuntimeException("Insufficient balance for subscription " +subscription.get().getSubscriptionType());
 				}
