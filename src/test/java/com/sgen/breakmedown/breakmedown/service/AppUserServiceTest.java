@@ -144,11 +144,28 @@ class AppUserServiceTest {
 		
 	}
 	
-	
+	@Test
+	void testDeleteAppUserById_FAILURE() {
+		AppUser appUser = 
+				new AppUser("Hello", "World", "hello@gmail.com", "password");
+		appUser.setId(2);
+		
+//		Mockito.when(this.appUserRepo.findById(2)).thenReturn(Optional.of(appUser));
+		
+		BDDMockito.given(this.appUserRepo.findById(2)).willReturn(Optional.ofNullable(null));
+		
+		boolean wasAppUserDeleted = this.appUserService.deleteAppUserById(2);
+		
+		Mockito.verify(this.appUserRepo, times(0)).deleteById(2);
+		
+		assertFalse(wasAppUserDeleted);	
+		
+	}
 
 	@Test
 	void testFindAllAppUsers() {
 //		fail("Not yet implemented");
+		
 	}
 
 	@Test
