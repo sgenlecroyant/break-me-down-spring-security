@@ -15,8 +15,13 @@ import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
 @Service
 public class AppUserService implements AppUserDaoHelper{
 	
-	@Autowired
+	
 	private AppUserRepo appUserRepo;
+	
+	@Autowired
+	public AppUserService(AppUserRepo appUserRepo) {
+		this.appUserRepo = appUserRepo;
+	}
 	
 	@Override
 	public Optional<AppUser> registerAppUser(AppUserRegistrationRequest registrationRequest) {
