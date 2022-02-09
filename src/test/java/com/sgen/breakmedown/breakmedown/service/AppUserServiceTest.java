@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.never;
 
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,7 +24,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.sgen.breakmedown.breakmedown.model.AppUser;
+import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
+import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
 
 @SpringBootTest
 class AppUserServiceTest {
@@ -31,6 +35,9 @@ class AppUserServiceTest {
 	
 	@Mock
 	private AppUserRepo appUserRepo;
+	
+	@Mock
+	private AccountService accountService;
 	
 	@InjectMocks
 	private AppUserService appUserService;
@@ -42,6 +49,7 @@ class AppUserServiceTest {
 	public void setUp() {
 		logger.info("Setting up the testing environment");
 		this.autoCloseable = MockitoAnnotations.openMocks(this);
+		this.appUserService = new AppUserService(appUserRepo, accountService);
 	}
 
 	@AfterEach
@@ -52,7 +60,34 @@ class AppUserServiceTest {
 
 	@Test
 	void testRegisterAppUser() {
-		logger.info("Testing Register AppUser...");
+		
+		AppUserRegistrationRequest request =
+				new AppUserRegistrationRequest("Hello", "World", "hello@gmail.com", "password");
+	
+		
+		AppUser appUser = 
+				new AppUser(request.getFirstName(), request.getLastName(), request.getUsername(), request.getPassword());
+		appUser.setId(2);
+		
+		Mockito.when(this.appUserRepo.save(any(AppUser.class)))
+				.thenReturn(appUser);
+		
+		Optional<AppUser> registerAppUser = this.appUserService.registerAppUser(request);
+		
+		ArgumentCaptor<AppUser> registrationArgumentCaptor = 
+				ArgumentCaptor.forClass(AppUser.class);
+		
+		Mockito.verify(this.appUserRepo).save(registrationArgumentCaptor.capture());
+		
+		AppUser capturedAppUser = registrationArgumentCaptor.getValue();
+		logger.info("Captured AppUser: "+capturedAppUser);
+		assertThat(capturedAppUser).isNotNull();
+		
+		assertThat(appUser.getLastName()).isEqualTo(registerAppUser.get().getLastName());
+		
+		Mockito.verify(this.appUserRepo, Mockito.times(1)).save(any());
+		
+		
 	}
 
 	@Test

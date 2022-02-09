@@ -139,6 +139,14 @@ public class AppUser {
 				&& role == other.role && Objects.equals(subscriptions, other.subscriptions)
 				&& Objects.equals(username, other.username);
 	}
+
+	@Override
+	public String toString() {
+		return "AppUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
+				+ ", password=" + password + ", role=" + role + ", subscriptions=" + subscriptions + ", account="
+				+ account + "]";
+	}
+	
 	
 	
 	

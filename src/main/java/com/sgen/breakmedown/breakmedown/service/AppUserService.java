@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sgen.breakmedown.breakmedown.helperclass.AppUserDaoHelper;
 import com.sgen.breakmedown.breakmedown.model.AppUser;
+import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
@@ -18,9 +19,12 @@ public class AppUserService implements AppUserDaoHelper{
 	
 	private AppUserRepo appUserRepo;
 	
-	@Autowired
-	public AppUserService(AppUserRepo appUserRepo) {
+	private AccountService accountService;
+	
+	
+	public AppUserService(AppUserRepo appUserRepo, AccountService accountService) {
 		this.appUserRepo = appUserRepo;
+		this.accountService = accountService;
 	}
 	
 	@Override
