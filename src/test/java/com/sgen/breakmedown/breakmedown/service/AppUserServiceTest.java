@@ -2,9 +2,12 @@ package com.sgen.breakmedown.breakmedown.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 
 import java.util.Optional;
 
@@ -124,9 +127,24 @@ class AppUserServiceTest {
 	}
 
 	@Test
-	void testDeleteAppUserById() {
-//		fail("Not yet implemented");
+	void testDeleteAppUserById_PASS() {
+		AppUser appUser = 
+				new AppUser("Hello", "World", "hello@gmail.com", "password");
+		appUser.setId(2);
+		
+//		Mockito.when(this.appUserRepo.findById(2)).thenReturn(Optional.of(appUser));
+		
+		BDDMockito.given(this.appUserRepo.findById(2)).willReturn(Optional.of(appUser));
+		
+		boolean wasAppUserDeleted = this.appUserService.deleteAppUserById(2);
+		
+		Mockito.verify(this.appUserRepo, times(1)).deleteById(2);
+		
+		assertTrue(wasAppUserDeleted);	
+		
 	}
+	
+	
 
 	@Test
 	void testFindAllAppUsers() {
