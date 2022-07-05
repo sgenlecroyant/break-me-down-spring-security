@@ -37,5 +37,15 @@ class AppUserSubscriptionServiceTest {
 		
 	}
 	
+	@Test
+	public void testFetchAllSubscriptionsFailure() {
+		List<Subscription> subscriptions = List.of(
+				new Subscription(SubscriptionType.S4G, "4G Net", 1200f),
+				new Subscription(SubscriptionType.S4G, "3G Net", 1000f));
+		List<Subscription> allSubscriptions = this.subscriptionService.fetchAllSubscriptions();
+		
+		assertThat(allSubscriptions.size()).isLessThanOrEqualTo(subscriptions.size());
+	}
+	
 
 }
