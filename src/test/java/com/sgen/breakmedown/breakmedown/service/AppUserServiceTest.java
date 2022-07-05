@@ -23,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.stubbing.OngoingStubbing;
+import org.mockito.verification.VerificationMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +32,7 @@ import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
+import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
 
 @SpringBootTest
 class AppUserServiceTest {
@@ -175,8 +177,29 @@ class AppUserServiceTest {
 	}
 
 	@Test
-	void testUpdateAppUser() {
-//		fail("Not yet implemented");
+	void testUpdateAppUserFailure() {
+		AppUserUpdateRequest updateRequest = new AppUserUpdateRequest("Franck", "Sgen", "sgen@gmail.com", "password");
+		updateRequest.setId(10);
+		AppUser appUser = new AppUser("Peter", "Smith", "smith@gmail.com", "password");
+		Mockito.when(this.appUserRepo.findById(updateRequest.getId())).thenReturn(Optional.empty());
+		
+		Mockito.verify(this.appUserRepo, never()).save(any());
+		
+	}
+	
+	@Test
+	void testUpdateAppUserSuccess() {
+		AppUserUpdateRequest updateRequest = new AppUserUpdateRequest("Franck", "Sgen", "sgen@gmail.com", "password");
+		updateRequest.setId(10);
+		
+		AppUser appUser = new AppUser("Peter", "Smith", "smith@gmail.com", "password");
+		
+		BDDMockito.given(this.appUserRepo.findById(updateRequest.getId()))
+				.willReturn(Optional.of(appUser));
+		
+		Optional<AppUser> updateAppUser = this.appUserService.updateAppUser(updateRequest);
+		Mockito.verify(this.appUserRepo, times(1)).save(any());
+		
 	}
 
 }
