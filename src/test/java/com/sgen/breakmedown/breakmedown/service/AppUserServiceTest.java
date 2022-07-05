@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -164,8 +165,13 @@ class AppUserServiceTest {
 
 	@Test
 	void testFindAllAppUsers() {
-//		fail("Not yet implemented");
 		
+		List<AppUser> appUsers = List.of(new AppUser("Franck", "Sgen", "sgen@gmail.com", "password"));
+		Mockito.when(this.appUserRepo.findAll()).thenReturn(appUsers);
+		
+		List<AppUser> fetchedAppUsesrs = this.appUserService.findAllAppUsers();
+		
+		assertThat(fetchedAppUsesrs.equals(appUsers));
 	}
 
 	@Test
