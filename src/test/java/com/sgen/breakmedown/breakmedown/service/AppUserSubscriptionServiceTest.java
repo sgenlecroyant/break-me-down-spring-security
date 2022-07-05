@@ -1,13 +1,19 @@
 package com.sgen.breakmedown.breakmedown.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.never;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.boot.Banner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.sgen.breakmedown.breakmedown.model.Subscription;
@@ -44,8 +50,16 @@ class AppUserSubscriptionServiceTest {
 				new Subscription(SubscriptionType.S4G, "3G Net", 1000f));
 		List<Subscription> allSubscriptions = this.subscriptionService.fetchAllSubscriptions();
 		
-		assertThat(allSubscriptions.size()).isLessThanOrEqualTo(subscriptions.size());
+		assertThat(allSubscriptions.size()).isLessThan(subscriptions.size());
 	}
 	
-
+	@Test
+	public void testDeleteSubscriptionByIdFailure() {
+		Mockito.when(this.subscriptionRepo.findById(anyInt())).thenReturn(Optional.empty());
+		Mockito.verify(this.subscriptionRepo, never()).delete(any());
+		
+		assertThatThrownBy(() -> this.subscriptionService.deleteSubscriptionById(anyInt()))
+							.hasMessage("subscription not available");
+				
+	}
 }
