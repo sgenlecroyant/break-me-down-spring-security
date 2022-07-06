@@ -71,4 +71,6 @@ class AppUserSubscriptionServiceTest {
 		this.subscriptionService.deleteSubscriptionById(anyInt());
 		Mockito.verify(this.subscriptionRepo, times(1)).deleteById(anyInt());
 	}
+	
+	// TODO:  Test addSubcription AND fetchSubcriptionById
 }

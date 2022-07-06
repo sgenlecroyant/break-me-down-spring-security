@@ -36,6 +36,7 @@ public class SubscriptionService {
 		 return Optional.of(addedSubscription);
 	}
 	
+
 	public Subscription updateSubscription(Subscription subscription) {
 		Optional<Subscription> subscriptionToUpdate = this.subscriptionRepo.findById(subscription.getId());
 		if(subscriptionToUpdate.isPresent()) {
