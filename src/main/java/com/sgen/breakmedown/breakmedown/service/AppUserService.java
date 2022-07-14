@@ -34,6 +34,8 @@ public class AppUserService implements AppUserDaoHelper{
 				registrationRequest.getLastName(), 
 				registrationRequest.getUsername(), 
 				registrationRequest.getPassword());
+		Account account = appUser.getAccount();
+		this.accountService.registerAccount(account);
 				AppUser registeredAppUser = this.appUserRepo.save(appUser);
 				
 		return Optional.of(registeredAppUser);

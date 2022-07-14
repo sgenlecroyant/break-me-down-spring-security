@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sgen.breakmedown.breakmedown.model.account.Account;
+import com.sgen.breakmedown.breakmedown.model.account.accountEnum.AccountStatus;
 import com.sgen.breakmedown.breakmedown.privilege.permission.Permission;
 import com.sgen.breakmedown.breakmedown.privilege.role.Role;
 
@@ -34,14 +35,14 @@ public class AppUser {
 	private String password; // still using the raw passwords cuz we have not started yet anything related to security
 	
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Role role = Role.USER;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Subscription.class)
 	@JsonIgnore(value = false)
 	private Set<Subscription> subscriptions = new HashSet<>();
 	
 	@OneToOne
-	private Account account;
+	private Account account = new Account(AccountStatus.ACTIVE);
 	public AppUser() {
 		// default constructor for database mapping
 	}
