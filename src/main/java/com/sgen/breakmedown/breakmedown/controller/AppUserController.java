@@ -68,6 +68,8 @@ public class AppUserController {
 		return ResponseEntity.ok().build();
 	}
 	
+	public ResponseEntity<String> authenticate(@RequestBody )
+	
 	
 	
 	
