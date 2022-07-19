@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
+import com.sgen.breakmedown.breakmedown.requestTemplate.AuthenticationRequest;
 import com.sgen.breakmedown.breakmedown.service.AppUserService;
 
 @RestController
@@ -68,9 +69,13 @@ public class AppUserController {
 		return ResponseEntity.ok().build();
 	}
 	
-	public ResponseEntity<String> authenticate(@RequestBody )
-	
-	
+	@PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
+		System.out.println("authenticating ...");
+		System.out.println(authenticationRequest);
+		String authResponseMessage = this.appUserService.authenticate(authenticationRequest);
+		return new ResponseEntity<String>(authResponseMessage, HttpStatus.ACCEPTED);
+	}
 	
 	
 	

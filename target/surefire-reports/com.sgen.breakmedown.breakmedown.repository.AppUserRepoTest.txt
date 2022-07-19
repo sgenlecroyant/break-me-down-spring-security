@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.sgen.breakmedown.breakmedown.repository.AppUserRepoTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.738 s <<< FAILURE! - in com.sgen.breakmedown.breakmedown.repository.AppUserRepoTest
+test  Time elapsed: 0.212 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessApiUsageException: org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : com.sgen.breakmedown.breakmedown.model.AppUser.account -> com.sgen.breakmedown.breakmedown.model.account.Account; nested exception is java.lang.IllegalStateException: org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : com.sgen.breakmedown.breakmedown.model.AppUser.account -> com.sgen.breakmedown.breakmedown.model.account.Account
+	at com.sgen.breakmedown.breakmedown.repository.AppUserRepoTest.test(AppUserRepoTest.java:27)
+Caused by: java.lang.IllegalStateException: org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : com.sgen.breakmedown.breakmedown.model.AppUser.account -> com.sgen.breakmedown.breakmedown.model.account.Account
+	at com.sgen.breakmedown.breakmedown.repository.AppUserRepoTest.test(AppUserRepoTest.java:27)
+Caused by: org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : com.sgen.breakmedown.breakmedown.model.AppUser.account -> com.sgen.breakmedown.breakmedown.model.account.Account
+	at com.sgen.breakmedown.breakmedown.repository.AppUserRepoTest.test(AppUserRepoTest.java:27)
+

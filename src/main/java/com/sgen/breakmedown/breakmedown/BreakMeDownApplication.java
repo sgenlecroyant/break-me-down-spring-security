@@ -10,6 +10,7 @@ public class BreakMeDownApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BreakMeDownApplication.class, args);
 		System.out.println("Break-Me-Down If you can!");
+
 	}
 
 }

@@ -12,11 +12,12 @@ import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
+import com.sgen.breakmedown.breakmedown.requestTemplate.AuthenticationRequest;
+import com.sgen.breakmedown.breakmedown.staticresponse.StaticAuthResponse;
 
 @Service
 public class AppUserService implements AppUserDaoHelper{
-	
-	
+
 	private AppUserRepo appUserRepo;
 	
 	private AccountService accountService;
@@ -64,7 +65,6 @@ public class AppUserService implements AppUserDaoHelper{
 
 	@Override
 	public List<AppUser> findAllAppUsers() {
-		// TODO Auto-generated method stub
 		return this.appUserRepo.findAll();
 	}
 
@@ -82,6 +82,19 @@ public class AppUserService implements AppUserDaoHelper{
 		}else {
 			throw new RuntimeException("The operation is not allowed!");
 		}
+	}
+
+	public String authenticate(AuthenticationRequest authenticationRequest) {
+		Optional<AppUser> nullableFetchedUser = this.appUserRepo.findByUsername(authenticationRequest.getUsername());
+		AppUser fetchedAppUser = nullableFetchedUser.get();
+		if(fetchedAppUser.getUsername().equals(authenticationRequest.getUsername())) {
+			if(fetchedAppUser.getPassword().equals(authenticationRequest.getPassword())) {
+				return StaticAuthResponse.SUCCESS.name();
+			}else {
+				return StaticAuthResponse.INCORRECT_PASSWORD.name();
+			}
+		}
+		return StaticAuthResponse.INVALID_USERNAME.name();
 	}
 
 }
