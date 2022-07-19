@@ -20,6 +20,7 @@ import com.sgen.breakmedown.breakmedown.model.AppUser;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AuthenticationRequest;
+import com.sgen.breakmedown.breakmedown.response.AppUserAuthSuccessResponseDTO;
 import com.sgen.breakmedown.breakmedown.service.AppUserService;
 
 @RestController
@@ -69,12 +70,12 @@ public class AppUserController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
+	@PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppUserAuthSuccessResponseDTO> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
 		System.out.println("authenticating ...");
 		System.out.println(authenticationRequest);
-		String authResponseMessage = this.appUserService.authenticate(authenticationRequest);
-		return new ResponseEntity<String>(authResponseMessage, HttpStatus.ACCEPTED);
+		AppUserAuthSuccessResponseDTO authenticatedAppUser = this.appUserService.authenticate(authenticationRequest);
+		return new ResponseEntity<AppUserAuthSuccessResponseDTO>(authenticatedAppUser, HttpStatus.ACCEPTED);
 	}
 	
 	
