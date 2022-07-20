@@ -21,6 +21,7 @@
 /home/sgen/Developer/projects/java/spring/selft-teaching/break-me-down-spring-security/src/main/java/com/sgen/breakmedown/breakmedown/service/AppUserSubscriptionService.java
 /home/sgen/Developer/projects/java/spring/selft-teaching/break-me-down-spring-security/src/main/java/com/sgen/breakmedown/breakmedown/service/AppUserService.java
 /home/sgen/Developer/projects/java/spring/selft-teaching/break-me-down-spring-security/src/main/java/com/sgen/breakmedown/breakmedown/model/account/accountEnum/AccountStatus.java
+/home/sgen/Developer/projects/java/spring/selft-teaching/break-me-down-spring-security/src/main/java/com/sgen/breakmedown/breakmedown/response/AppUserAuthSuccessResponseDTO.java
 /home/sgen/Developer/projects/java/spring/selft-teaching/break-me-down-spring-security/src/main/java/com/sgen/breakmedown/breakmedown/privilege/role/Role.java
 /home/sgen/Developer/projects/java/spring/selft-teaching/break-me-down-spring-security/src/main/java/com/sgen/breakmedown/breakmedown/model/AppUser.java
 /home/sgen/Developer/projects/java/spring/selft-teaching/break-me-down-spring-security/src/main/java/com/sgen/breakmedown/breakmedown/config/cors/CorsConfig.java

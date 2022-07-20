@@ -3,6 +3,9 @@ package com.sgen.breakmedown.breakmedown.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
 import com.sgen.breakmedown.breakmedown.helperclass.AppUserDaoHelper;
@@ -79,20 +82,24 @@ public class AppUserService implements AppUserDaoHelper {
 		}
 	}
 
-	public AppUserAuthSuccessResponseDTO authenticate(AuthenticationRequest authenticationRequest) {
+	public AppUserAuthSuccessResponseDTO authenticate(AuthenticationRequest authenticationRequest, HttpServletRequest request, HttpServletResponse response) {
+		String authenticationHeaderKey = "authentication-header";
 		Optional<AppUser> nullableFetchedUser = this.appUserRepo.findByUsername(authenticationRequest.getUsername());
 		AppUser fetchedAppUser = nullableFetchedUser.get();
 		if (fetchedAppUser.getUsername().equals(authenticationRequest.getUsername())) {
 			if (fetchedAppUser.getPassword().equals(authenticationRequest.getPassword())) {
 				System.out.println("SUCCESS AUTHENTICATION");
+				response.addHeader(authenticationHeaderKey, "SUCCESS");
 				return AppUserAuthSuccessResponseDTO.builder(fetchedAppUser).build();
 			} else {
 				System.out.println("INCORRECT PASSWORD");
+				response.addHeader(authenticationHeaderKey, "INCORRECT_PASSWORD");
 				return AppUserAuthSuccessResponseDTO.builder(fetchedAppUser).build();
 
 			}
 		}
 		System.out.println("INCORRECT USERNAME");
+		response.addHeader(authenticationHeaderKey, "INCORRECT_USERNAME");
 		return AppUserAuthSuccessResponseDTO.builder(fetchedAppUser).build();
 
 	}

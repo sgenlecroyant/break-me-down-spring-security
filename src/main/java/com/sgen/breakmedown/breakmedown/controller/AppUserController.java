@@ -3,6 +3,9 @@ package com.sgen.breakmedown.breakmedown.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -71,22 +74,17 @@ public class AppUserController {
 	}
 	
 	@PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AppUserAuthSuccessResponseDTO> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
+	public ResponseEntity<AppUserAuthSuccessResponseDTO> authenticate(
+			@RequestBody AuthenticationRequest authenticationRequest,
+			HttpServletRequest request, HttpServletResponse response){
 		System.out.println("authenticating ...");
 		System.out.println(authenticationRequest);
-		AppUserAuthSuccessResponseDTO authenticatedAppUser = this.appUserService.authenticate(authenticationRequest);
+		AppUserAuthSuccessResponseDTO authenticatedAppUser = this.appUserService.authenticate(authenticationRequest, request, response);
+		System.out.println(request);
+		System.out.println(response);
+		response.addHeader("name", "sgen");
+		System.out.println("added header:");
 		return new ResponseEntity<AppUserAuthSuccessResponseDTO>(authenticatedAppUser, HttpStatus.ACCEPTED);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
