@@ -83,7 +83,7 @@ public class AppUserService implements AppUserDaoHelper {
 	}
 
 	public AppUserAuthSuccessResponseDTO authenticate(AuthenticationRequest authenticationRequest, HttpServletRequest request, HttpServletResponse response) {
-		String authenticationHeaderKey = "authentication-header";
+		String authenticationHeaderKey = "authenticationHeader";
 		Optional<AppUser> nullableFetchedUser = this.appUserRepo.findByUsername(authenticationRequest.getUsername());
 		AppUser fetchedAppUser = nullableFetchedUser.get();
 		if (fetchedAppUser.getUsername().equals(authenticationRequest.getUsername())) {
@@ -94,13 +94,13 @@ public class AppUserService implements AppUserDaoHelper {
 			} else {
 				System.out.println("INCORRECT PASSWORD");
 				response.addHeader(authenticationHeaderKey, "INCORRECT_PASSWORD");
-				return AppUserAuthSuccessResponseDTO.builder(fetchedAppUser).build();
+				return new AppUserAuthSuccessResponseDTO();
 
 			}
 		}
 		System.out.println("INCORRECT USERNAME");
 		response.addHeader(authenticationHeaderKey, "INCORRECT_USERNAME");
-		return AppUserAuthSuccessResponseDTO.builder(fetchedAppUser).build();
+		return  new AppUserAuthSuccessResponseDTO();
 
 	}
 
