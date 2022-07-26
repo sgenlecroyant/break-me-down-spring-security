@@ -61,7 +61,7 @@ public class AppUserController {
 	
 	@DeleteMapping(value = "/appusers/{id}")
 	public ResponseEntity<Boolean> deleteAppUserById(@PathVariable Integer id){
-		@SuppressWarnings(value = "unused")
+		
 		boolean wasAppUserDeleted = this.appUserService.deleteAppUserById(id);
 			return new ResponseEntity<Boolean>(wasAppUserDeleted, HttpStatus.OK);
 	}
@@ -82,8 +82,6 @@ public class AppUserController {
 		AppUserAuthSuccessResponseDTO authenticatedAppUser = this.appUserService.authenticate(authenticationRequest, request, response);
 		System.out.println(request);
 		System.out.println(response);
-		response.addHeader("name", "sgen");
-		System.out.println("added header:");
 		return new ResponseEntity<AppUserAuthSuccessResponseDTO>(authenticatedAppUser, HttpStatus.ACCEPTED);
 	}
 	

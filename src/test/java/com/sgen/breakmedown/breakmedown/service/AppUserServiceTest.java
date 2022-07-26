@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
@@ -14,7 +13,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
@@ -22,14 +20,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.OngoingStubbing;
-import org.mockito.verification.VerificationMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.sgen.breakmedown.breakmedown.model.AppUser;
-import com.sgen.breakmedown.breakmedown.model.account.Account;
 import com.sgen.breakmedown.breakmedown.repository.AppUserRepo;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserRegistrationRequest;
 import com.sgen.breakmedown.breakmedown.requestTemplate.AppUserUpdateRequest;
